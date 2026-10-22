@@ -1,4 +1,12 @@
 <h2>La foto astronomica del giorno</h2>
+<div class="row g-2 mb-3">
+  <div class="col-auto">
+    <input #dataInput type="date" class="form-control" aria-label="Seleziona data">
+  </div>
+  <div class="col-auto">
+    <button type="button" class="btn btn-primary" (click)="caricaData(dataInput.value)">Mostra</button>
+  </div>
+</div>
 @if (loading()) {
     <div class="spinner-border text-primary" role="status"></div>
 }

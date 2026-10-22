@@ -38,4 +38,25 @@ export class Nasa implements OnInit {
       return `Errore ${status} dal server della NASA.`;
     }
   }
+
+  caricaData(dataSelezionata: string): void {
+    if (!dataSelezionata) return;
+    this.loading.set(true);
+    this.errore.set(null);
+
+    this.nasaService.getApodDel(dataSelezionata).subscribe({
+      next: (dati) => {
+        this.apod.set(dati);
+        this.loading.set(false);
+      },
+      error: (err: HttpErrorResponse) => {
+        this.loading.set(false);
+        if (err.status === 400) {
+          this.errore.set('Data non valida: non è possibile scegliere una data futura o precedente al 16 Giugno 1995.');
+        } else {
+          this.errore.set(this.messaggio(err.status));
+        }
+      }
+    });
+  }
 }
