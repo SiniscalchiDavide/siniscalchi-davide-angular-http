@@ -15,4 +15,9 @@ export class PostService {
     addPost(post: Omit<Post, 'id'>): Observable<Post> {
         return this.http.post<Post>(this.baseUrl, post);
     }
+    getPagina(pagina: number): Observable<Post[]> {
+        return this.http.get<Post[]>(this.baseUrl, {
+                params: { _page: pagina, _limit: 10 }
+            });
+    }
 }

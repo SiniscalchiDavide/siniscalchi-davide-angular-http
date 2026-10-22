@@ -56,4 +56,21 @@ export class Posts {
     this.errore.set(`Errore ${err.status}: ${err.message}`);
     this.loading.set(false);
   }
+
+
+
+  readonly pagina = signal(1);
+
+  caricaPagina(p: number): void {
+    if (p < 1 || p > 10) return;
+    this.pagina.set(p);
+    this.inizia();
+    this.postService.getPagina(p).subscribe({
+      next: (dati) => {
+        this.posts.set(dati);
+        this.loading.set(false);
+      },
+      error: (err: HttpErrorResponse) => this.gestisciErrore(err),
+    });
+  }
 }
