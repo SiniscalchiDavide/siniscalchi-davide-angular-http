@@ -1,0 +1,44 @@
+<h2>Pokédex</h2>
+
+
+<div class="mb-4 d-flex flex-wrap gap-1">
+  @for (tipo of tipi(); track tipo.name) {
+    <span class="badge bg-secondary text-capitalize">{{ tipo.name }}</span>
+  }
+</div>
+
+
+<div class="row g-2 mb-3">
+  <div class="col-auto">
+    <input #cercaInput type="text" class="form-control" placeholder="Nome o numero (es. pikachu o 25)">
+  </div>
+  <div class="col-auto">
+    <button type="button" class="btn btn-primary" (click)="cerca(cercaInput.value)">Cerca</button>
+  </div>
+</div>
+
+@if (loading()) {
+  <div class="spinner-border text-primary mb-3" role="status"></div>
+}
+
+@if (errore()) {
+  <div class="alert alert-danger">{{ errore() }}</div>
+}
+
+
+@if (pokemon(); as p) {
+  <div class="card" style="width: 18rem;">
+    @if (p.sprites.front_default) {
+      <img [src]="p.sprites.front_default" [alt]="p.name" class="card-img-top w-50 mx-auto pt-3">
+    }
+    <div class="card-body text-center">
+      <h3 class="card-title h4 text-capitalize">{{ p.name }}</h3>
+      <p class="card-text mb-1">
+        <strong>Altezza:</strong> {{ p.height / 10 }} m
+      </p>
+      <p class="card-text">
+        <strong>Peso:</strong> {{ p.weight / 10 }} kg
+      </p>
+    </div>
+  </div>
+}
